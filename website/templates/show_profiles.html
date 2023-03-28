@@ -1,0 +1,25 @@
+{%extends "base.html"%} {%block title%}Home{%endblock%}
+{%block content%}
+<h1>profielen</h1>
+<table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>rol</th>
+        <th>action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for profile in profiles %}
+        <tr>
+          <td>{{ profile.id }}</td>
+          <td>{{ profile.name }}</td>
+          <td>{{ profile.role }}</td>
+          <td><a link="#">edit<a> <a link="#">delete<a><td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+{%endblock%}

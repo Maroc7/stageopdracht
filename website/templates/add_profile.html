@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Add Profile</h1>
-<form method="POST">
+<form method="POST" action="{{ url_for('views.add_profile') }}">
     {{ form.csrf_token }}
     {{ form.name.label }} {{ form.name }}<br>
     {{ form.role.label }} {{ form.role }}<br>
