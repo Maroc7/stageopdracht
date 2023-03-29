@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from website.models import User
 from website.database import db
 
 auth = Blueprint('auth', __name__)
+
+
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -29,3 +32,5 @@ def login():
 
     # Render the login page
     return render_template('login.html')
+
+

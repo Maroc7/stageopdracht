@@ -1,4 +1,28 @@
 {%extends "base.html"%} {%block title%}Home{%endblock%}
 {%block content%}
-<h1>Home</h1>
+
+    <h1>Feestdagen</h1>
+    {{ data|safe }}
+    <br></br>
+    <h2>Feestdag toevoegen</h2>
+    <form method="POST" action="/toevoegen">
+        <label for="datum">Datum:</label>
+        <input type="date" id="datum" name="datum" required><br>
+      
+        <label for="naam_nl">Naam (Nederlands):</label>
+        <input type="text" id="naam_nl" name="naam_nl" required><br>
+      
+        <label for="naam_en">Naam (Engels):</label>
+        <input type="text" id="naam_en" name="naam_en" required><br>
+      
+        <label for="naam_fr">Naam (Frans):</label>
+        <input type="text" id="naam_fr" name="naam_fr" required><br>
+      
+        <label for="is_officieel">Officiële feestdag:</label>
+        <input type="checkbox" id="is_officieel" name="is_officieel" value="True"><br>
+      
+        <input type="submit" value="Toevoegen">
+      </form>
+      
+
 {%endblock%}
