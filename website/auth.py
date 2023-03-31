@@ -34,11 +34,13 @@ def login():
         else:
             flash('name does not exist.', category='error')
 
-    return render_template("login.html",user = current_user)
+    return render_template("login.html",profile = current_user)
+
 
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash('You have been logged out.', 'success')
     return redirect(url_for('auth.login'))

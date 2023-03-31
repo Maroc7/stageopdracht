@@ -23,8 +23,6 @@ def create_app():
 
     app.register_blueprint(views, url_prefix='/')
     app.cli.add_command('db',MigrateCommand)
-
-    # Import auth here to avoid circular import issues
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
 

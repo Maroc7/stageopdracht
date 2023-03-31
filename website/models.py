@@ -18,3 +18,9 @@ class Profile(db.Model):
     
     def get_id(self):
         return str(self.id)
+
+    def is_authenticated(self):
+        return True if self.id else False
+
+    def is_anonymous(self):
+        return False
