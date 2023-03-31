@@ -5,6 +5,7 @@
 <form method="POST" action="{{ url_for('views.add_profile') }}">
     {{ form.csrf_token }}
     {{ form.name.label }} {{ form.name }}<br>
+    {{ form.password.label }} {{ form.password }}<br>
     {{ form.role.label }} {{ form.role }}<br>
     <input type="submit" value="Add">
 </form>

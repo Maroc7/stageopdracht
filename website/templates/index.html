@@ -2,7 +2,33 @@
 {%block content%}
 
     <h1>Feestdagen</h1>
-    {{ data|safe }}
+    <table>
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Naam NL</th>
+          <th>Naam EN</th>
+          <th>Naam FR</th>
+          <th>Officieel</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row['Datum'] }}</td>
+          <td>{{ row['Naam NL'] }}</td>
+          <td>{{ row['Naam EN'] }}</td>
+          <td>{{ row['Naam FR'] }}</td>
+          <td>{{ row['Officiële feestdag'] }}</td>
+        </tr>
+        {% endfor %}
+
+        Welcome {{ current_user.name }}
+      </tbody>
+    </table>
+    
+
+
     <br></br>
     <h2>Feestdag toevoegen</h2>
     <form method="POST" action="/toevoegen">

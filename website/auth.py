@@ -1,36 +1,44 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from website.models import User
-from website.database import db
+from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask_login import login_user,UserMixin, current_user,logout_user,login_required
+from werkzeug.security import check_password_hash
+from .models import Profile
+from website import login_manager
 
 auth = Blueprint('auth', __name__)
 
+
+from .models import Profile
+
+@login_manager.user_loader
+def load_user(proifile_id):
+    return Profile.query.get(int(proifile_id))
 
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    name = ''
+    password = ''
     if request.method == 'POST':
-        username = request.form.get('username')
+        name = request.form.get('name')
         password = request.form.get('password')
 
-        # Check if the user exists and the password is correct
-        user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            # Check if the user has the role of "beheerder"
-            if user.role == "beheerder":
-                session['user_id'] = user.id
-                session['is_admin'] = user.is_admin
-                return redirect(url_for('beheerderspagina'))
+        profile = Profile.query.filter_by(name=name).first()
+        if profile:
+            if check_password_hash(profile.password, password):
+                flash('Logged in successfully!', category='success')
+                login_user(profile, remember=True)
+                return redirect(url_for('views.index'))
             else:
-                # User does not have the "beheerder" role
-                error_msg = "Access denied. Only users with the role of beheerder are allowed to access the beheerderspagina."
-                return render_template('login.html', error=error_msg)
+                flash('Incorrect password, try again.', category='error')
         else:
-            # Invalid login credentials
-            error_msg = "Invalid username or password."
-            return render_template('login.html', error=error_msg)
+            flash('name does not exist.', category='error')
 
-    # Render the login page
-    return render_template('login.html')
+    return render_template("login.html",user = current_user)
 
 
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
