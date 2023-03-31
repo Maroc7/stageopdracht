@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Feestdagen die nog moeten worden bevestigd</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Naam NL</th>
+                <th>Naam EN</th>
+                <th>Naam FR</th>
+                <th>Officiele feestdag</th>
+                <th>Bevestigd</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feestdag in data %}
+                <tr>
+                    <td>{{ feestdag['Datum'] }}</td>
+                    <td>{{ feestdag['Naam NL'] }}</td>
+                    <td>{{ feestdag['Naam EN'] }}</td>
+                    <td>{{ feestdag['Naam FR'] }}</td>
+                    <td>{{ feestdag['Officiële feestdag'] }}</td>
+                    <td>{{ feestdag['bevestigd'] }}</td>
+                    <td>
+                        {% if feestdag['bevestigd'] == "in behandeling" %}
+                            <form  action="{{ url_for("views.bevestig_feestdag", datum=feestdag['Datum']) }}" method="POST">
+                                <button type="submit">Bevestigen</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

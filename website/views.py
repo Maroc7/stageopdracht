@@ -32,15 +32,17 @@ def toevoegen():
     naam_en = request.form['naam_en']
     naam_fr = request.form['naam_fr']
     is_officieel = request.form.get('is_officieel')
+    bevestigd = "in behandeling"
     if is_officieel is not None:
         is_officieel = True
     else:
         is_officieel = False
     # sla de gegevens op in de CSV
-    with open('feestdag.csv', 'a', newline='', encoding="utf-8")as csvfile:
-        fieldnames = ['datum', 'naam_nl', 'naam_en', 'naam_fr', 'is_officieel']
+    with open('feestdag_aanvraag.csv', 'a', newline='', encoding="utf-8")as csvfile:
+        fieldnames = ['datum', 'naam_nl', 'naam_en', 'naam_fr', 'is_officieel','bevestigd']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerow({'datum': datum, 'naam_nl': naam_nl, 'naam_en': naam_en, 'naam_fr': naam_fr, 'is_officieel': is_officieel})
+        writer.writerow({'datum': datum, 'naam_nl': naam_nl, 'naam_en': naam_en, 'naam_fr': naam_fr, 'is_officieel': is_officieel, 'bevestigd' : bevestigd})
+        flash("Aanvraag feestdag is verstuurd!, succes")
     return redirect(url_for('views.feestdag'))
 
 
@@ -102,3 +104,47 @@ def edit_feestdagen():
     # render het formulier om feestdagen te bewerken
     return render_template('beheerder_editcsv.html', feestdagen=feestdagen)
 
+
+
+@views.route('/bevestigen', methods=['GET', 'POST'])
+def bevestigen():
+    df = pd.read_csv('feestdag_aanvraag.csv',encoding="utf-8")
+    data = df.to_dict('records')
+    return render_template('bevestigen.html', data=data)
+
+
+@views.route('/bevestig-feestdag/<datum>', methods=['POST'])
+def bevestig_feestdag(datum):
+       # controleer of de gebruiker een beheerder is
+    if not current_user.is_authenticated or current_user.role != 'beheerder':
+        return redirect(url_for('auth.login'))
+    
+    # haal de gegevens van de bevestigde feestdag op
+    with open('feestdag_aanvraag.csv', 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        feestdagen = [row for row in reader]
+        feestdag = next((row for row in feestdagen if row['Datum'] == datum), None)
+
+    # voeg de feestdag toe aan het andere CSV-bestand
+    with open('feestdag.csv', 'a', newline='', encoding='utf-8') as csvfile:
+        fieldnames = ['Datum', 'Naam NL', 'Naam EN', 'Naam FR', 'Officiële feestdag']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        for row in feestdagen:
+            if row['Datum'] == datum:
+                row.pop('bevestigd', None)
+                writer.writerow(row)
+                verwijder_feestdag(datum)
+    flash("Feestdag is bevestigd", "succes")
+    return render_template("feestdag.html")
+
+
+def verwijder_feestdag(datum):
+    with open('feestdag_aanvraag.csv', 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        feestdagen = [row for row in reader if row['Datum'] != datum]
+    with open('feestdag_aanvraag.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        fieldnames = ['Datum', 'Naam NL', 'Naam EN', 'Naam FR', 'Officiële feestdag', 'bevestigd']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in feestdagen:
+            writer.writerow(row)

@@ -1,25 +1,33 @@
+
+  {% extends "base.html" %}
+{% block title %}Bewerk feestdagen{% endblock %}
+{% block content %}
 <table>
-    <thead>
-      <tr>
-        <th>Datum</th>
-        <th>Naam NL</th>
-        <th>Naam EN</th>
-        <th>Naam FR</th>
-        <th>Officiële feestdag</th>
-        <th>Bewerk</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for feestdag in feestdagen %}
-      <tr>
-        <td>{{ feestdag.Datum }}</td>
-        <td>{{ feestdag.naam_nl }}</td>
-        <td>{{ feestdag.name_en }}</td>
-        <td>{{ feestdag.name_fr }}</td>
-        <td>{{ feestdag.official }}</td>
-        <td><a href="feestdag/edit">Bewerk</a></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
+  <thead>
+    <tr>
+      <th>Datum</th>
+      <th>Naam NL</th>
+      <th>Naam EN</th>
+      <th>Naam FR</th>
+      <th>Officiële feestdag</th>
+      <th>Bewerk</th>
+      <th>Verwijder</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for feestdag in feestdagen %}
+    <tr>
+      <td>{{ feestdag.Datum }}</td>
+      <td>{{ feestdag.name_nl }}</td>
+      <td>{{ feestdag.name_en }}</td>
+      <td>{{ feestdag.name_fr }}</td>
+      <td>{{ feestdag.official }}</td>
+      <td><a href="feestdag/edit">Bewerk</a></td>
+      <td><a href="feestdag/edit">Verwijder</a></td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

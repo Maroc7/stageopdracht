@@ -2,7 +2,16 @@
 {%block content%}
 
     <h1>registratiesysteem</h1>
-    <h2>Welcome {{ current_user.name }} </h2>
-    <p>u heeft de rol: {{ current_user.role }}</p>
+    <h2>Welcome {{ current_user.name }}, u heeft de rol: {{ current_user.role }}</h2>
+    <br><br/>
+    {% if current_user.role == "beheerder"%}
+    <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/>,<a href="/bevestigen">bevestigen<a/>, <a href="/  feestdag/edit">bewerken<a/> en <a href="/show_profiles">profielen<a/> na kijken.</h2>
+    {% endif %}
+    {% if current_user.role == "personeel"%}
+    <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/></h2>
+    {% endif %}
+
+
+
 
 {%endblock%}
