@@ -3,15 +3,21 @@
 
     <h1>registratiesysteem</h1>
     <h2>Welcome {{ current_user.name }}, u heeft de rol: {{ current_user.role }}</h2>
-    <br><br/>
+    <hr>
     {% if current_user.role == "beheerder"%}
-    <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/>,<a href="/bevestigen">bevestigen<a/>, <a href="/  feestdag/edit">bewerken<a/> en <a href="/show_profiles">profielen<a/> na kijken.</h2>
+    <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/>,<a href="/bevestigen">bevestigen<a/>, <a href="/feestdag/edit">bewerken<a/> en <a href="/show_profiles">profielen<a/> na kijken.</h2>
+        {% if niet_bevestigd == 1 %}
+        <h3>Er is <a href="/bevestigen">{{ niet_bevestigd }}</a> feestdag die nog bevestigd moet worden.</h3>
+        {% elif niet_bevestigd > 1 %}
+        <h3>Er zijn <a href="/bevestigen">{{ niet_bevestigd }}</a> feestdagen die nog bevestigd moeten worden.</h3>
+        {% else %}
+        <h3>Er zijn geen feestdagen die moeten worden bevestigd.</h3>
+        {% endif %}
+
+
     {% endif %}
     {% if current_user.role == "personeel"%}
-    <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/></h2>
+        <h2>U kan feestdagen <a href="/feestdag">toevoegen<a/></h2>
     {% endif %}
-
-
-
-
+        
 {%endblock%}

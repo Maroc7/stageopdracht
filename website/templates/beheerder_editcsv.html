@@ -18,13 +18,21 @@
   <tbody>
     {% for feestdag in feestdagen %}
     <tr>
-      <td>{{ feestdag.Datum }}</td>
-      <td>{{ feestdag.name_nl }}</td>
-      <td>{{ feestdag.name_en }}</td>
-      <td>{{ feestdag.name_fr }}</td>
-      <td>{{ feestdag.official }}</td>
-      <td><a href="feestdag/edit">Bewerk</a></td>
-      <td><a href="feestdag/edit">Verwijder</a></td>
+      <td>{{ feestdag['Datum'] }}</td>
+      <td>{{ feestdag['Naam NL'] }}</td>
+      <td>{{ feestdag['Naam EN'] }}</td>
+      <td>{{ feestdag['Naam FR'] }}</td>
+      <td>{{ feestdag['Officiële feestdag'] }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('views.bewerk_feestdag', datum=feestdag['Datum']) }}">
+          <button type="submit" formmethod="POST" formaction="{{ url_for('views.bewerk_feestdag', datum=feestdag['Datum']) }}">Bewerk feestdag</button>
+        </form>
+      </td>
+      
+        <td><form method="post" action="{{ url_for('views.verwijder_feestdag', datum=feestdag['Datum']) }}">
+        <button type="submit">Verwijder feestdag</button>
+      </form></td>
+    
 
     </tr>
     {% endfor %}
