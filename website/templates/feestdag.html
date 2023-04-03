@@ -1,5 +1,44 @@
 {%extends "base.html"%} {%block title%}Login{%endblock%}
 {%block content%}
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #dddddd;
+  }
+  form {
+    width: 100%;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  input[type="text"], input[type="date"], input[type="checkbox"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+</style>
+
 
 <h1>Feestdagen</h1>
 <table>
@@ -7,7 +46,7 @@
     <tr>
       <th>Datum</th>
       <th>Naam NL</th>
-      <th>Naam EN</th>
+      <div><th>Naam EN</th>
       <th>Naam FR</th>
       <th>Officieel</th>
 
@@ -33,7 +72,8 @@
 
 <br></br>
 <h2>Feestdag toevoegen</h2>
-<form method="POST" action="/toevoegen">
+<div class="container-fluid">
+  <form method="POST" action="/toevoegen">
     <label for="datum">Datum:</label>
     <input type="date" id="datum" name="datum" required><br>
   
@@ -51,5 +91,7 @@
   
     <input type="submit" value="Toevoegen">
   </form>
+</div>
+
   
 {%endblock%}

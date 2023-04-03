@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
+<style>
+  .full-width-form {
+    width: 100%;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+</style>
   <h1>Login</h1>
   <form method="POST" action="{{ url_for('auth.login') }}">
     <label for="name">Name:</label>

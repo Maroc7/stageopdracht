@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
+<style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    th {
+      background-color: #dddddd;
+    }
+    button[name=action][value=bevestigen] {
+        background-color: green;
+        color: white;
+        font-weight: bold;
+    }
+    
+    button[name=action][value=weigeren] {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+    }
+    
+  </style>
     <h1>Feestdagen die nog moeten worden bevestigd</h1>
+    <hr>
     
     <table>
         <thead>
@@ -11,7 +39,11 @@
                 <th>Naam EN</th>
                 <th>Naam FR</th>
                 <th>Officiele feestdag</th>
-                <th>Bevestigd</th>
+                <th>Status</th>
+                <th>ingediend door</th>
+                <th>Knop<th>
+
+
                 <th></th>
             </tr>
         </thead>
@@ -24,13 +56,16 @@
                     <td>{{ feestdag['Naam FR'] }}</td>
                     <td>{{ feestdag['Officiële feestdag'] }}</td>
                     <td>{{ feestdag['bevestigd'] }}</td>
+                    <td><a href="/show_profiles">{{ feestdag['ingediend_door'] }}</a></td>
                     <td>
-                        {% if feestdag['bevestigd'] == "in behandeling" %}
-                            <form  action="{{ url_for("views.bevestig_feestdag", datum=feestdag['Datum']) }}" method="POST">
-                                <button type="submit">Bevestigen</button>
-                            </form>
-                        {% endif %}
+                        <form action="{{ url_for('views.bevestig_feestdag', datum=feestdag['Datum']) }}" method="POST">
+                            <button type="submit" name="action" value="bevestigen">Bevestigen</button>
+                            <button type="submit" name="action" value="weigeren">Weigeren</button>
+                          </form>
+                          
                     </td>
+
+
                 </tr>
             {% endfor %}
         </tbody>

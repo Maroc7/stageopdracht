@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Bewerk feestdag{% endblock %}
 {% block content %}
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #dddddd;
+  }
+</style>
+
 <form method="POST">
   <h1> Feestdag bewerken</h1>
   <div class="feestdag-info">
     <p><strong>Datum:</strong> {{ feestdag['Datum'] }} <strong>Naam NL:</strong> {{ feestdag['Naam NL'] }} <strong>Naam EN:</strong> {{ feestdag['Naam EN'] }}
-      <strong>Naam FR:</strong> {{ feestdag['Naam FR'] }} <strong>Officiële feestdag:</strong> {{ feestdag['Officiële feestdag'] }}
+      <strong>Naam FR:</strong> {{ feestdag['Naam FR'] }} <strong>Officiële feestdag:</strong> {{ feestdag['Officiële feestdag'] }} <strong>feestdag ingediend door:</strong> {{ feestdag['ingediend_door'] }}
     </p>
   </div>
   <hr>  

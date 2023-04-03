@@ -1,6 +1,26 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<style>
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      input[type="text"], input[type="date"], input[type="checkbox"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+</style>
 <h1>Add Profile</h1>
 <form method="POST" action="{{ url_for('views.add_profile') }}">
     {{ form.csrf_token }}
