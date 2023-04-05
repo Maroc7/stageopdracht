@@ -1,4 +1,4 @@
-from .database import db
+from website.database import db
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)

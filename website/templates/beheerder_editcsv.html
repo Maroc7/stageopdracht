@@ -1,5 +1,4 @@
-
-  {% extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}Bewerk feestdagen{% endblock %}
 {% block content %}
 <style>
@@ -29,8 +28,6 @@
       <th>Officiële feestdag</th>
       <th>Bewerk</th>
       <th>Verwijder</th>
-
-
     </tr>
   </thead>
   <tbody>
@@ -42,15 +39,15 @@
       <td>{{ feestdag['Naam FR'] }}</td>
       <td>{{ feestdag['Officiële feestdag'] }}</td>
       <td>
-        <form method="GET" action="{{ url_for('views.bewerk_feestdag', datum=feestdag['Datum']) }}">
-          <button type="submit" formmethod="POST" formaction="{{ url_for('views.bewerk_feestdag', datum=feestdag['Datum']) }}">Bewerk feestdag</button>
+        <form method="post" action="{{ url_for('views.bewerk_feestdag', datum=feestdag['Datum']) }}">
+          <button type="submit" formmethod="POST">Bewerk feestdag</button>
         </form>
       </td>
-      
-        <td><form method="post" action="{{ url_for('views.verwijder_feestdag', datum=feestdag['Datum']) }}">
-        <button type="submit">Verwijder feestdag</button>
-      </form></td>
-
+      <td>
+        <form method="post" action="{{ url_for('views.verwijder_feestdag', datum=feestdag['Datum']) }}">
+          <button type="submit" formmethod="POST">Verwijder feestdag</button>
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
