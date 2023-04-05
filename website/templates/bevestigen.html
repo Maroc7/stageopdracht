@@ -60,9 +60,11 @@
                     <td>
                         <form action="{{ url_for('views.bevestig_feestdag', datum=feestdag['Datum']) }}" method="POST">
                             <button type="submit" name="action" value="bevestigen">Bevestigen</button>
+                        </form>
+                        <form action="{{ url_for('views.verwijder_feestdag', datum=feestdag['Datum']) }}" method="POST">
                             <button type="submit" name="action" value="weigeren">Weigeren</button>
-                          </form>
-                          
+                        </form>
+
                     </td>
 
 
