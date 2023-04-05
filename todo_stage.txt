@@ -1,0 +1,13 @@
+stage opdracht
+functies: 
+profiel maken met rollen x
+feestdag toevoegen X
+feestdagen bewerken en verwijderen X
+beide beheerder en personeel kunnen inloggen. X
+beheerder heeft een adminpaneel waar hij de van personeel kan bevestigen en aanpassen X
+in aanvraag feestdag csv bestand moet er een kolom komen wie de aanvraag heeft verstuurd X
+aanvraag anuleren X
+fine tunen X
+
+
+pad naar project folder:  C:\Users\Administrator\Desktop\stageopdracht
