@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from os import path
 from website.bp_feestdag import views_fd
 from website.bp_profile import views_pf
@@ -28,8 +28,10 @@ def create_app():
     app.register_blueprint(views_fd, url_prefix='/')
     app.register_blueprint(views_gn, url_prefix='/')
     app.register_blueprint(views_pf , url_prefix='/')
-    app.cli.add_command('db',MigrateCommand)
     from .bp_profile.auth import auth
     app.register_blueprint(auth, url_prefix='/')
 
     return app
+
+
+    

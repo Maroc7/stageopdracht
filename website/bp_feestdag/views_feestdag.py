@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for,request,flash
-from flask_login import current_user
+from flask_login import current_user,login_required
 import pandas as pd
 import csv
 from website.bp_feestdag.forms import hash_password,FeestdagForm
@@ -8,7 +8,7 @@ views_fd = Blueprint('views', __name__)
 
 
 
-
+@login_required
 @views_fd.route("/feestdag")
 def feestdag():
     df = pd.read_csv('feestdag.csv',encoding="utf-8")
@@ -16,8 +16,8 @@ def feestdag():
     return render_template('feestdag.html', data=data)
     
 
-
 @views_fd.route('/toevoegen', methods=['GET','POST'])
+@login_required
 def toevoegen():
     # haal de gegevens uit het formulier
     ingediend_door = current_user.name
@@ -37,7 +37,7 @@ def toevoegen():
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow({'datum': datum, 'naam_nl': naam_nl, 'naam_en': naam_en, 'naam_fr': naam_fr, 'is_officieel': is_officieel, 'bevestigd' : bevestigd,"ingediend_door" : ingediend_door})
         flash("Aanvraag feestdag is verstuurd!")
-    return redirect(url_for('views.feestdag'))
+    return redirect(url_for('views.feestdag',user=current_user))
 
 
  
@@ -197,8 +197,6 @@ def bewerk_feestdag(datum):
 
 @views_fd.route('/verwijder-feestdag/<datum>', methods=['POST'])
 def verwijder_feestdag(datum):
-
-
     # controleer of de gebruiker een beheerder is
     if not current_user.is_authenticated or current_user.role != 'beheerder':
         return redirect(url_for('auth.login'))
